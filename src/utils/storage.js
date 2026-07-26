@@ -55,6 +55,7 @@ export const saveAppointment = (appointmentData) => {
 
   const updated = [newRecord, ...current];
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new CustomEvent('appointment-updated', { detail: newRecord }));
 
   // ASYNC POST TO REAL BACKEND DATABASE SERVER
   fetch(BACKEND_URL, {
@@ -66,10 +67,10 @@ export const saveAppointment = (appointmentData) => {
   .then(data => {
     if (data.success && data.data) {
       console.log('✅ Successfully saved to backend database:', data.data);
-      // Update local cache with server authoritative record
       const refreshed = getAppointments().map(a => a.id === newRecord.id ? data.data : a);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(refreshed));
       window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new CustomEvent('appointment-updated', { detail: data.data }));
     }
   })
   .catch(err => {
@@ -85,6 +86,7 @@ export const updateAppointmentStatus = (id, newStatus) => {
   const current = getAppointments();
   const updated = current.map(a => a.id === id ? { ...a, status: newStatus } : a);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new CustomEvent('appointment-updated'));
 
   // PATCH TO BACKEND SERVER
   fetch(`${BACKEND_URL}/${id}/status`, {
@@ -95,6 +97,7 @@ export const updateAppointmentStatus = (id, newStatus) => {
   .then(res => res.json())
   .then(data => {
     console.log('✅ Status updated in backend database:', data);
+    window.dispatchEvent(new CustomEvent('appointment-updated'));
   })
   .catch(err => {
     console.warn('Updated status locally:', err);

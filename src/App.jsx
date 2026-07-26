@@ -985,8 +985,21 @@ function AdminPortalView({ onExitAdmin }) {
 
   useEffect(() => {
     refreshData();
+
+    // Listen for cross-tab and local appointment-updated events
     window.addEventListener('storage', refreshData);
-    return () => window.removeEventListener('storage', refreshData);
+    window.addEventListener('appointment-updated', refreshData);
+
+    // Auto-poll backend every 3 seconds for instant real-time sync across devices
+    const interval = setInterval(() => {
+      refreshData();
+    }, 3000);
+
+    return () => {
+      window.removeEventListener('storage', refreshData);
+      window.removeEventListener('appointment-updated', refreshData);
+      clearInterval(interval);
+    };
   }, [selectedDate]);
 
   // Filter appointments
