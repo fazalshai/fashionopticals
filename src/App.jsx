@@ -47,7 +47,7 @@ export default function App() {
   // Listen for #admin URL hash or Ctrl+Shift+A keyboard shortcut for staff access
   useEffect(() => {
     const handleHashCheck = () => {
-      if (window.location.hash === '#admin') {
+      if (window.location.hash === '#admin' || window.location.pathname === '/admin' || window.location.pathname === '/admin/') {
         setShowAdminLoginModal(true);
       }
     };
