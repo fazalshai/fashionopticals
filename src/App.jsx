@@ -5,6 +5,7 @@ import {
   fetchAppointmentsFromBackend,
   saveAppointment, 
   updateAppointmentStatus, 
+  deleteAppointment,
   getBlockedSlots, 
   toggleBlockSlot, 
   generateTimeSlots 
@@ -1083,6 +1084,13 @@ function AdminPortalView({ onExitAdmin }) {
     }
   };
 
+  const handleDeleteAppointment = async (id, name) => {
+    if (window.confirm(`Are you sure you want to permanently delete appointment ${id} for "${name}"?`)) {
+      deleteAppointment(id);
+      await refreshData();
+    }
+  };
+
   const ALL_SESSIONS = generateTimeSlots();
 
   return (
@@ -1228,7 +1236,7 @@ function AdminPortalView({ onExitAdmin }) {
                           </span>
                         </td>
                         <td style={{ padding: '10px 14px' }}>
-                          <div style={{ display: 'flex', gap: '4px' }}>
+                          <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
                             {app.status === 'Confirmed' && (
                               <button onClick={() => handleStatus(app.id, 'Arrived')} style={{ padding: '3px 6px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#fef3c7', border: '1px solid #fcd34d' }}>Arrived</button>
                             )}
@@ -1238,6 +1246,13 @@ function AdminPortalView({ onExitAdmin }) {
                             {app.status !== 'Cancelled' && app.status !== 'Completed' && (
                               <button onClick={() => handleStatus(app.id, 'Cancelled')} style={{ padding: '3px 6px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#fee2e2', border: '1px solid #fca5a5' }}>Cancel</button>
                             )}
+                            <button 
+                              onClick={() => handleDeleteAppointment(app.id, app.patientName)}
+                              style={{ padding: '3px 6px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#fee2e2', border: '1px solid #ef4444', color: '#b91c1c', fontWeight: 700 }}
+                              title="Delete Appointment Entry"
+                            >
+                              🗑 Delete
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -1280,12 +1295,13 @@ function AdminPortalView({ onExitAdmin }) {
                     <th style={{ padding: '10px 14px' }}>Consultation Date</th>
                     <th style={{ padding: '10px 14px' }}>OPD Session</th>
                     <th style={{ padding: '10px 14px' }}>Status</th>
+                    <th style={{ padding: '10px 14px' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {appointments.length === 0 ? (
                     <tr>
-                      <td colSpan={7} style={{ padding: '28px', textAlign: 'center', color: 'var(--gray)' }}>
+                      <td colSpan={8} style={{ padding: '28px', textAlign: 'center', color: 'var(--gray)' }}>
                         Backend database is currently empty.
                       </td>
                     </tr>
@@ -1310,6 +1326,15 @@ function AdminPortalView({ onExitAdmin }) {
                           }}>
                             {app.status}
                           </span>
+                        </td>
+                        <td style={{ padding: '10px 14px' }}>
+                          <button 
+                            onClick={() => handleDeleteAppointment(app.id, app.patientName)}
+                            style={{ padding: '3px 6px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#fee2e2', border: '1px solid #ef4444', color: '#b91c1c', fontWeight: 700 }}
+                            title="Delete Appointment Entry"
+                          >
+                            🗑 Delete
+                          </button>
                         </td>
                       </tr>
                     ))

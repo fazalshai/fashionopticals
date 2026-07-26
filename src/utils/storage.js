@@ -134,7 +134,32 @@ export const updateAppointmentStatus = (id, newStatus) => {
   return updated;
 };
 
-// 4. BLOCK / UNBLOCK SLOTS
+// 4. DELETE SINGLE APPOINTMENT ENTRY
+export const deleteAppointment = (id) => {
+  const current = getAppointments();
+  const updated = current.filter(a => a.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new Event('storage'));
+  window.dispatchEvent(new CustomEvent('appointment-updated'));
+
+  // DELETE ON BACKEND SERVER
+  fetch(`${BACKEND_URL}/${id}`, {
+    method: 'DELETE'
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('✅ Appointment deleted from backend database:', data);
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('appointment-updated'));
+  })
+  .catch(err => {
+    console.warn('Deleted locally:', err);
+  });
+
+  return updated;
+};
+
+// 5. BLOCK / UNBLOCK SLOTS
 export const getBlockedSlots = () => {
   try {
     const data = localStorage.getItem('fashion_opticals_blocked_slots');
