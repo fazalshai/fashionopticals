@@ -1,0 +1,14 @@
+{
+  "name": "fashion-opticals-backend",
+  "version": "1.0.0",
+  "description": "Node.js Express Backend for Fashion Opticals",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
