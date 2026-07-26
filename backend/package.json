@@ -1,7 +1,7 @@
 {
   "name": "fashion-opticals-backend",
   "version": "1.0.0",
-  "description": "Node.js Express Backend for Fashion Opticals",
+  "description": "Backend API Server",
   "main": "server.js",
   "type": "module",
   "scripts": {
