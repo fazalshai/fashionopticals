@@ -1092,9 +1092,9 @@ function AdminPortalView({ onExitAdmin }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid var(--line)', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span className="eyebrow">Real Backend Server Connected:</span>
+            <span className="eyebrow">Database API Connected:</span>
             <span style={{ fontSize: '11px', background: '#dcfce7', color: '#15803d', fontWeight: 700, padding: '2px 8px', borderRadius: '12px' }}>
-              ● LIVE (http://localhost:5001/api/appointments)
+              ● LIVE ({typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:5001' : 'Vercel Cloud Database API'})
             </span>
           </div>
           <h1 style={{ fontSize: '24px', marginTop: '4px' }}>Fashion Opticals Control Center</h1>
