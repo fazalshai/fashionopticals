@@ -1,6 +1,10 @@
 import { INITIAL_APPOINTMENTS } from '../data/mockData';
 
-const BACKEND_URL = 'http://localhost:5001/api/appointments';
+// Dynamic API URL: Uses relative route '/api/appointments' on production Vercel, and local server on localhost
+const BACKEND_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+  ? 'http://localhost:5001/api/appointments'
+  : '/api/appointments';
+
 const STORAGE_KEY = 'fashion_opticals_appointments';
 
 // 1. GET ALL APPOINTMENTS FROM BACKEND API WITH LOCALSTORAGE FALLBACK
