@@ -7,7 +7,7 @@ const BACKEND_URL = typeof window !== 'undefined' && window.location.hostname ==
 
 const STORAGE_KEY = 'fashion_opticals_appointments';
 
-// 1. GET ALL APPOINTMENTS FROM BACKEND API WITH LOCALSTORAGE FALLBACK
+// 1. GET ALL APPOINTMENTS FROM LOCALSTORAGE
 export const getAppointments = () => {
   const local = localStorage.getItem(STORAGE_KEY);
   let appointments = [];
@@ -19,56 +19,83 @@ export const getAppointments = () => {
   return appointments;
 };
 
-// ASYNC FETCH FROM REAL BACKEND DATABASE
+// HELPER TO MERGE TWO APPOINTMENT ARRAYS SAFELY BY ID (PREVENT LOSS)
+function mergeAppointments(serverList, localList) {
+  const map = new Map();
+
+  // Add local records first
+  for (const item of localList) {
+    if (item && item.id) map.set(item.id, item);
+  }
+
+  // Server records take precedence if updated
+  for (const item of serverList) {
+    if (item && item.id) {
+      map.set(item.id, item);
+    }
+  }
+
+  const merged = Array.from(map.values());
+  // Sort newest first by ID or createdAt
+  merged.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
+  return merged;
+}
+
+// ASYNC FETCH FROM REAL BACKEND DATABASE WITH ZERO-LOSS MERGE
 export const fetchAppointmentsFromBackend = async (date = 'ALL') => {
+  const localApps = getAppointments();
   try {
     const url = date && date !== 'ALL' ? `${BACKEND_URL}?date=${date}` : BACKEND_URL;
     const res = await fetch(url);
     if (res.ok) {
       const result = await res.json();
       if (result.success && Array.isArray(result.data)) {
-        // Synchronize backend data to local cache
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(result.data));
-        return result.data;
+        const merged = mergeAppointments(result.data, localApps);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        return merged;
       }
     }
   } catch (err) {
-    console.warn('Backend API unreachable, using local storage cache:', err);
+    console.warn('Backend API unreachable, returning local storage:', err);
   }
-  return getAppointments();
+  return localApps;
 };
 
-// 2. SAVE NEW APPOINTMENT (REAL POST TO BACKEND SERVER)
+// 2. SAVE NEW APPOINTMENT (ZERO DATA LOSS)
 export const saveAppointment = (appointmentData) => {
-  // Local immediate fallback save
   const current = getAppointments();
   const dateStr = appointmentData.date.replace(/-/g, '');
   const count = current.filter(a => a.date === appointmentData.date).length + 1;
-  const appointmentId = `FO-${dateStr}-${String(count).padStart(3, '0')}`;
+  const appointmentId = appointmentData.id || `FO-${dateStr}-${String(count).padStart(3, '0')}`;
 
   const newRecord = {
     id: appointmentId,
     ...appointmentData,
-    status: 'Confirmed',
-    createdAt: new Date().toISOString()
+    status: appointmentData.status || 'Confirmed',
+    createdAt: appointmentData.createdAt || new Date().toISOString()
   };
 
-  const updated = [newRecord, ...current];
+  // 1. Immediately save to local storage (instant response)
+  const updated = [newRecord, ...current.filter(a => a.id !== appointmentId)];
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+
+  // Dispatch events immediately so UI updates
+  window.dispatchEvent(new Event('storage'));
   window.dispatchEvent(new CustomEvent('appointment-updated', { detail: newRecord }));
 
-  // ASYNC POST TO REAL BACKEND DATABASE SERVER
+  // 2. Save to Backend Database API
   fetch(BACKEND_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(appointmentData)
+    body: JSON.stringify(newRecord)
   })
   .then(res => res.json())
   .then(data => {
     if (data.success && data.data) {
-      console.log('✅ Successfully saved to backend database:', data.data);
-      const refreshed = getAppointments().map(a => a.id === newRecord.id ? data.data : a);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(refreshed));
+      console.log('✅ Appointment saved to backend database:', data.data);
+      const latestLocal = getAppointments();
+      const merged = mergeAppointments([data.data], latestLocal);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
       window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new CustomEvent('appointment-updated', { detail: data.data }));
     }
@@ -77,7 +104,6 @@ export const saveAppointment = (appointmentData) => {
     console.warn('Saved locally (backend unreachable):', err);
   });
 
-  window.dispatchEvent(new Event('storage'));
   return newRecord;
 };
 
@@ -86,6 +112,7 @@ export const updateAppointmentStatus = (id, newStatus) => {
   const current = getAppointments();
   const updated = current.map(a => a.id === id ? { ...a, status: newStatus } : a);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  window.dispatchEvent(new Event('storage'));
   window.dispatchEvent(new CustomEvent('appointment-updated'));
 
   // PATCH TO BACKEND SERVER
@@ -97,13 +124,13 @@ export const updateAppointmentStatus = (id, newStatus) => {
   .then(res => res.json())
   .then(data => {
     console.log('✅ Status updated in backend database:', data);
+    window.dispatchEvent(new Event('storage'));
     window.dispatchEvent(new CustomEvent('appointment-updated'));
   })
   .catch(err => {
     console.warn('Updated status locally:', err);
   });
 
-  window.dispatchEvent(new Event('storage'));
   return updated;
 };
 

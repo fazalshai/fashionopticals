@@ -111,7 +111,7 @@ app.get('/api/appointments', (req, res) => {
 // 2. SAVE NEW APPOINTMENT (REAL BACKEND SAVE)
 app.post('/api/appointments', (req, res) => {
   try {
-    const { patientName, phone, age, visitedBefore, gender, date, timeSlot, reason, doctorName, doctorAffil } = req.body;
+    const { id, patientName, phone, age, visitedBefore, gender, date, timeSlot, reason, doctorName, doctorAffil, status, createdAt } = req.body;
 
     if (!patientName || !phone || !date || !timeSlot) {
       return res.status(400).json({ success: false, error: 'Missing required patient fields' });
@@ -120,7 +120,10 @@ app.post('/api/appointments', (req, res) => {
     const db = readDatabase();
     const dateStr = date.replace(/-/g, '');
     const countOnDate = db.appointments.filter(a => a.date === date).length + 1;
-    const appointmentId = `FO-${dateStr}-${String(countOnDate).padStart(3, '0')}`;
+    const appointmentId = id || `FO-${dateStr}-${String(countOnDate).padStart(3, '0')}`;
+
+    // Replace if already exists, else insert at top
+    const existingIdx = db.appointments.findIndex(a => a.id === appointmentId);
 
     const newAppointment = {
       id: appointmentId,
@@ -134,11 +137,16 @@ app.post('/api/appointments', (req, res) => {
       reason: reason ? reason.trim() : 'General Eye Consultation',
       doctorName: doctorName || 'Dr. Vuyyuru Raja Sekhar',
       doctorAffil: doctorAffil || 'Guntur Medical College & Hospital',
-      status: 'Confirmed',
-      createdAt: new Date().toISOString()
+      status: status || 'Confirmed',
+      createdAt: createdAt || new Date().toISOString()
     };
 
-    db.appointments.unshift(newAppointment); // Newest first
+    if (existingIdx !== -1) {
+      db.appointments[existingIdx] = newAppointment;
+    } else {
+      db.appointments.unshift(newAppointment); // Newest first
+    }
+
     writeDatabase(db);
 
     console.log(`📌 REAL PATIENT APPOINTMENT SAVED TO BACKEND DATABASE: ${newAppointment.id} (${newAppointment.patientName})`);
