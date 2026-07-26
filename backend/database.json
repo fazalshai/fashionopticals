@@ -1,0 +1,64 @@
+{
+  "appointments": [
+    {
+      "id": "FO-20260727-004",
+      "patientName": "fazal",
+      "phone": "+91 9705681005",
+      "age": 23,
+      "visitedBefore": "First Visit",
+      "gender": "Specified",
+      "date": "2026-07-27",
+      "timeSlot": "Morning Session (09:00 AM - 10:30 AM)",
+      "reason": "General Eye Examination",
+      "doctorName": "Dr. Vuyyuru Raja Sekhar",
+      "doctorAffil": "Guntur Medical College & Hospital",
+      "status": "Arrived",
+      "createdAt": "2026-07-26T09:28:57.268Z"
+    },
+    {
+      "id": "FO-20260727-003",
+      "patientName": "Fazal Test Patient",
+      "phone": "+91 9705681005",
+      "age": 28,
+      "visitedBefore": "First Visit",
+      "gender": "Specified",
+      "date": "2026-07-27",
+      "timeSlot": "Morning Session (09:00 AM - 10:30 AM)",
+      "reason": "Testing Real Backend Database Save",
+      "doctorName": "Dr. Vuyyuru Raja Sekhar",
+      "doctorAffil": "Guntur Medical College & Hospital",
+      "status": "Cancelled",
+      "createdAt": "2026-07-26T09:27:06.770Z"
+    },
+    {
+      "id": "FO-20260727-001",
+      "patientName": "Ramesh Kumar",
+      "phone": "+91 9490349868",
+      "age": 46,
+      "visitedBefore": "Returning Patient",
+      "gender": "Male",
+      "date": "2026-07-27",
+      "timeSlot": "Morning Session (09:00 AM - 10:30 AM)",
+      "reason": "Cataract Consultation & Eye Checkup",
+      "doctorName": "Dr. Vuyyuru Raja Sekhar",
+      "doctorAffil": "Guntur Medical College & Hospital",
+      "status": "Cancelled",
+      "createdAt": "2026-07-26T08:00:00Z"
+    },
+    {
+      "id": "FO-20260727-002",
+      "patientName": "Saritha Reddy",
+      "phone": "+91 9948501005",
+      "age": 38,
+      "visitedBefore": "First Visit",
+      "gender": "Female",
+      "date": "2026-07-27",
+      "timeSlot": "Mid-Morning Session (10:30 AM - 12:00 PM)",
+      "reason": "Vision Testing & Spectacle Prescription",
+      "doctorName": "Dr. Vuyyuru Raja Sekhar",
+      "doctorAffil": "Guntur Medical College & Hospital",
+      "status": "Cancelled",
+      "createdAt": "2026-07-26T08:30:00Z"
+    }
+  ]
+}
