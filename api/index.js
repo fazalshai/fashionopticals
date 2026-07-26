@@ -1,79 +1,76 @@
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
-import path from 'path';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Global persistent in-memory store for Vercel Serverless Functions
+if (!globalThis.__FASHION_OPTICALS_DB__) {
+  globalThis.__FASHION_OPTICALS_DB__ = [
+    {
+      id: "FO-20260727-001",
+      patientName: "Ramesh Kumar",
+      phone: "+91 9490349868",
+      age: 46,
+      visitedBefore: "Returning Patient",
+      gender: "Male",
+      date: "2026-07-27",
+      timeSlot: "Morning Session (09:00 AM - 10:30 AM)",
+      reason: "Cataract Consultation & Eye Checkup",
+      doctorName: "Dr. Vuyyuru Raja Sekhar",
+      doctorAffil: "Guntur Medical College & Hospital",
+      status: "Confirmed",
+      createdAt: "2026-07-26T08:00:00Z"
+    },
+    {
+      id: "FO-20260727-002",
+      patientName: "Saritha Reddy",
+      phone: "+91 9948501005",
+      age: 38,
+      visitedBefore: "First Visit",
+      gender: "Female",
+      date: "2026-07-27",
+      timeSlot: "Mid-Morning Session (10:30 AM - 12:00 PM)",
+      reason: "Vision Testing & Spectacle Prescription",
+      doctorName: "Dr. Vuyyuru Raja Sekhar",
+      doctorAffil: "Guntur Medical College & Hospital",
+      status: "Arrived",
+      createdAt: "2026-07-26T08:30:00Z"
+    }
+  ];
+}
+
 const DB_FILE = '/tmp/database.json';
 
-function initDatabase() {
-  if (!fs.existsSync(DB_FILE)) {
-    const initialData = {
-      appointments: [
-        {
-          id: "FO-20260727-001",
-          patientName: "Ramesh Kumar",
-          phone: "+91 9490349868",
-          age: 46,
-          visitedBefore: "Returning Patient",
-          gender: "Male",
-          date: "2026-07-27",
-          timeSlot: "Morning Session (09:00 AM - 10:30 AM)",
-          reason: "Cataract Consultation & Eye Checkup",
-          doctorName: "Dr. Vuyyuru Raja Sekhar",
-          doctorAffil: "Guntur Medical College & Hospital",
-          status: "Confirmed",
-          createdAt: "2026-07-26T08:00:00Z"
-        },
-        {
-          id: "FO-20260727-002",
-          patientName: "Saritha Reddy",
-          phone: "+91 9948501005",
-          age: 38,
-          visitedBefore: "First Visit",
-          gender: "Female",
-          date: "2026-07-27",
-          timeSlot: "Mid-Morning Session (10:30 AM - 12:00 PM)",
-          reason: "Vision Testing & Spectacle Prescription",
-          doctorName: "Dr. Vuyyuru Raja Sekhar",
-          doctorAffil: "Guntur Medical College & Hospital",
-          status: "Arrived",
-          createdAt: "2026-07-26T08:30:00Z"
-        }
-      ]
-    };
+function getAppointmentsDB() {
+  if (fs.existsSync(DB_FILE)) {
     try {
-      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+      const data = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+      if (Array.isArray(data.appointments)) {
+        // Merge with global memory
+        for (const appt of data.appointments) {
+          if (!globalThis.__FASHION_OPTICALS_DB__.some(a => a.id === appt.id)) {
+            globalThis.__FASHION_OPTICALS_DB__.unshift(appt);
+          }
+        }
+      }
     } catch (e) {}
   }
+  return globalThis.__FASHION_OPTICALS_DB__;
 }
 
-function readDatabase() {
-  initDatabase();
+function saveAppointmentsDB(appointments) {
+  globalThis.__FASHION_OPTICALS_DB__ = appointments;
   try {
-    const content = fs.readFileSync(DB_FILE, 'utf-8');
-    return JSON.parse(content);
-  } catch (e) {
-    return { appointments: [] };
-  }
-}
-
-function writeDatabase(data) {
-  try {
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
-    return true;
-  } catch (e) {
-    return false;
-  }
+    fs.writeFileSync(DB_FILE, JSON.stringify({ appointments }, null, 2), 'utf-8');
+  } catch (e) {}
 }
 
 // REST API ENDPOINTS
 app.get('/api/appointments', (req, res) => {
-  const db = readDatabase();
-  let appointments = db.appointments || [];
+  let appointments = [...getAppointmentsDB()];
   const { date, search, status } = req.query;
 
   if (date && date !== 'ALL') {
@@ -101,12 +98,12 @@ app.post('/api/appointments', (req, res) => {
     return res.status(400).json({ success: false, error: 'Missing required patient fields' });
   }
 
-  const db = readDatabase();
+  const appointments = getAppointmentsDB();
   const dateStr = date.replace(/-/g, '');
-  const countOnDate = db.appointments.filter(a => a.date === date).length + 1;
+  const countOnDate = appointments.filter(a => a.date === date).length + 1;
   const appointmentId = id || `FO-${dateStr}-${String(countOnDate).padStart(3, '0')}`;
 
-  const existingIdx = db.appointments.findIndex(a => a.id === appointmentId);
+  const existingIdx = appointments.findIndex(a => a.id === appointmentId);
 
   const newAppointment = {
     id: appointmentId,
@@ -125,12 +122,12 @@ app.post('/api/appointments', (req, res) => {
   };
 
   if (existingIdx !== -1) {
-    db.appointments[existingIdx] = newAppointment;
+    appointments[existingIdx] = newAppointment;
   } else {
-    db.appointments.unshift(newAppointment);
+    appointments.unshift(newAppointment);
   }
 
-  writeDatabase(db);
+  saveAppointmentsDB(appointments);
 
   res.status(201).json({
     success: true,
@@ -142,33 +139,31 @@ app.post('/api/appointments', (req, res) => {
 app.patch('/api/appointments/:id/status', (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
-  const db = readDatabase();
-  const index = db.appointments.findIndex(a => a.id === id);
+  const appointments = getAppointmentsDB();
+  const index = appointments.findIndex(a => a.id === id);
 
   if (index !== -1) {
-    db.appointments[index].status = status;
-    writeDatabase(db);
+    appointments[index].status = status;
+    saveAppointmentsDB(appointments);
   }
   res.json({ success: true, message: 'Status updated' });
 });
 
 app.delete('/api/appointments/:id', (req, res) => {
   const { id } = req.params;
-  const db = readDatabase();
-  db.appointments = db.appointments.filter(a => a.id !== id);
-  writeDatabase(db);
+  let appointments = getAppointmentsDB();
+  appointments = appointments.filter(a => a.id !== id);
+  saveAppointmentsDB(appointments);
   res.json({ success: true, message: 'Deleted' });
 });
 
 app.delete('/api/appointments', (req, res) => {
-  const db = readDatabase();
-  db.appointments = [];
-  writeDatabase(db);
+  saveAppointmentsDB([]);
   res.json({ success: true, message: 'Cleared' });
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'online', timestamp: new Date().toISOString() });
+  res.json({ status: 'online', count: getAppointmentsDB().length, timestamp: new Date().toISOString() });
 });
 
 export default app;

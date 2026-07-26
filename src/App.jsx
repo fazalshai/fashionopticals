@@ -979,6 +979,9 @@ function AdminPortalView({ onExitAdmin }) {
   const [wSlot, setWSlot] = useState('');
 
   const refreshData = async () => {
+    // Synchronously display local cache first for instant 0ms rendering
+    setAppointments(getAppointments());
+    // Asynchronously sync with backend server
     const data = await fetchAppointmentsFromBackend(selectedDate);
     setAppointments(data);
   };
