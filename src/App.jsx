@@ -1248,10 +1248,10 @@ function AdminPortalView({ onExitAdmin }) {
                             )}
                             <button 
                               onClick={() => handleDeleteAppointment(app.id, app.patientName)}
-                              style={{ padding: '3px 6px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#fee2e2', border: '1px solid #ef4444', color: '#b91c1c', fontWeight: 700 }}
+                              style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#dc2626', border: '1px solid #b91c1c', color: '#ffffff', fontWeight: 700, marginLeft: '4px' }}
                               title="Delete Appointment Entry"
                             >
-                              🗑 Delete
+                              🗑 Delete Entry
                             </button>
                           </div>
                         </td>
@@ -1330,10 +1330,10 @@ function AdminPortalView({ onExitAdmin }) {
                         <td style={{ padding: '10px 14px' }}>
                           <button 
                             onClick={() => handleDeleteAppointment(app.id, app.patientName)}
-                            style={{ padding: '3px 6px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#fee2e2', border: '1px solid #ef4444', color: '#b91c1c', fontWeight: 700 }}
+                            style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '10px', cursor: 'pointer', background: '#dc2626', border: '1px solid #b91c1c', color: '#ffffff', fontWeight: 700 }}
                             title="Delete Appointment Entry"
                           >
-                            🗑 Delete
+                            🗑 Delete Entry
                           </button>
                         </td>
                       </tr>
