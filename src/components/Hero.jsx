@@ -75,7 +75,7 @@ export const Hero = ({ onBookClick, onExploreOpticals }) => {
           <div className="doctor-hero-card glass-card">
             <div className="doctor-image-container">
               <img 
-                src="/doctor.png" 
+                src="/doctor.png?v=3" 
                 alt="Dr. Vuyyuru Raja Sekhar" 
                 className="doctor-hero-img" 
               />
@@ -218,14 +218,14 @@ export const Hero = ({ onBookClick, onExploreOpticals }) => {
           position: relative;
           border-radius: var(--radius-md);
           overflow: hidden;
-          height: 280px;
+          height: 380px;
           background: #e2e8f0;
         }
         .doctor-hero-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: top center;
+          object-position: center 20%;
         }
         .doctor-experience-tag {
           position: absolute;

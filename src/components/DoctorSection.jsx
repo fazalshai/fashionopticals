@@ -23,7 +23,7 @@ export const DoctorSection = ({ onBookClick }) => {
           <div className="bio-card glass-card">
             <div className="bio-header">
               <div className="bio-avatar-wrap">
-                <img src="/doctor.png" alt={DOCTOR_INFO.name} className="bio-avatar" />
+                <img src="/doctor.png?v=3" alt={DOCTOR_INFO.name} className="bio-avatar" />
               </div>
               <div>
                 <h3 className="bio-doctor-name">{DOCTOR_INFO.name}</h3>
@@ -38,9 +38,9 @@ export const DoctorSection = ({ onBookClick }) => {
             {/* In-Clinic Examination Photo Showcase */}
             <div style={{ marginBottom: '1.5rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-light)', boxShadow: '0 4px 14px rgba(0,0,0,0.08)' }}>
               <img 
-                src="/eye_examination.jpg" 
+                src="/eye_examination.jpg?v=3" 
                 alt="Dr. Vuyyuru Raja Sekhar performing eye examination with computerized ARK refraction machine" 
-                style={{ width: '100%', height: '220px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
+                style={{ width: '100%', height: '230px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
               />
               <div style={{ padding: '10px 14px', background: '#f8fafc', fontSize: '0.82rem', fontWeight: 600, color: 'var(--primary-navy)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <span>📷 Computerized ARK Eye Testing & Diagnostic Room</span>
@@ -203,11 +203,13 @@ export const DoctorSection = ({ onBookClick }) => {
           margin-bottom: 1.5rem;
         }
         .bio-avatar {
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
+          width: 110px;
+          height: 110px;
+          border-radius: 16px;
           object-fit: cover;
+          object-position: center top;
           border: 3px solid var(--accent-blue);
+          box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
         }
         .bio-doctor-name {
           font-size: 1.5rem;
