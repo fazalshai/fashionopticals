@@ -23,7 +23,7 @@ export const DoctorSection = ({ onBookClick }) => {
           <div className="bio-card glass-card">
             <div className="bio-header">
               <div className="bio-avatar-wrap">
-                <img src="/doctor.png?v=3" alt={DOCTOR_INFO.name} className="bio-avatar" />
+                <img src="/dr_vuyyuru_raja_sekhar.png" alt={DOCTOR_INFO.name} className="bio-avatar" />
               </div>
               <div>
                 <h3 className="bio-doctor-name">{DOCTOR_INFO.name}</h3>
@@ -38,7 +38,7 @@ export const DoctorSection = ({ onBookClick }) => {
             {/* In-Clinic Examination Photo Showcase */}
             <div style={{ marginBottom: '1.5rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-light)', boxShadow: '0 4px 14px rgba(0,0,0,0.08)' }}>
               <img 
-                src="/eye_examination.jpg?v=3" 
+                src="/eye_examination_clinic.jpg" 
                 alt="Dr. Vuyyuru Raja Sekhar performing eye examination with computerized ARK refraction machine" 
                 style={{ width: '100%', height: '230px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
               />

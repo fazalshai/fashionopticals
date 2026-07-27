@@ -75,7 +75,7 @@ export const Hero = ({ onBookClick, onExploreOpticals }) => {
           <div className="doctor-hero-card glass-card">
             <div className="doctor-image-container">
               <img 
-                src="/doctor.png?v=3" 
+                src="/dr_vuyyuru_raja_sekhar.png" 
                 alt="Dr. Vuyyuru Raja Sekhar" 
                 className="doctor-hero-img" 
               />
