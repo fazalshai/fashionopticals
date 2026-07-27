@@ -11,6 +11,8 @@ import {
   generateTimeSlots 
 } from './utils/storage';
 import { Phone, PlusCircle, Menu, X, MapPin, Download, Trash2, Database, ExternalLink, Calendar, RefreshCw } from 'lucide-react';
+import doctorImg from './assets/dr_vuyyuru_raja_sekhar.png';
+import eyeExamImg from './assets/eye_examination_clinic.jpg';
 
 export default function App() {
   // Navigation & View State
@@ -357,23 +359,30 @@ export default function App() {
                     </a>
                   </div>
 
-                  <div className="doctor-card">
-                    <div className="eyebrow">Resident Senior Eye Specialist</div>
-                    <h2>{DOCTOR_INFO.name}</h2>
-                    <div className="cred">{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
-                    
-                    <div className="stat-row">
-                      <div className="stat">
-                        <div className="num">38+</div>
-                        <div className="label">Years exp.</div>
-                      </div>
-                      <div className="stat">
-                        <div className="num">97%</div>
-                        <div className="label">Recommended</div>
-                      </div>
-                      <div className="stat">
-                        <div className="num">4</div>
-                        <div className="label">Specialities</div>
+                  <div className="doctor-card" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <img 
+                      src={doctorImg} 
+                      alt="Dr. Vuyyuru Raja Sekhar" 
+                      style={{ width: '105px', height: '105px', borderRadius: '16px', objectFit: 'cover', objectPosition: 'center top', border: '3px solid var(--accent-gold)', boxShadow: '0 6px 16px rgba(0,0,0,0.15)', flexShrink: 0 }} 
+                    />
+                    <div style={{ flex: 1, minWidth: '180px' }}>
+                      <div className="eyebrow">Resident Senior Eye Specialist</div>
+                      <h2 style={{ fontSize: '20px', margin: '2px 0' }}>{DOCTOR_INFO.name}</h2>
+                      <div className="cred" style={{ fontSize: '12px', color: 'var(--gray)', marginBottom: '8px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
+                      
+                      <div className="stat-row">
+                        <div className="stat">
+                          <div className="num">38+</div>
+                          <div className="label">Years exp.</div>
+                        </div>
+                        <div className="stat">
+                          <div className="num">97%</div>
+                          <div className="label">Recommended</div>
+                        </div>
+                        <div className="stat">
+                          <div className="num">4</div>
+                          <div className="label">Specialities</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -820,6 +829,38 @@ export default function App() {
                   <h2>Meet Dr. Vuyyuru Raja Sekhar</h2>
                 </div>
                 <div className="eyebrow">Resident Senior Specialist</div>
+              </div>
+
+              {/* REAL DOCTOR & IN-CLINIC EYE TESTING PHOTOS */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+                <div style={{ border: '1px solid var(--line)', borderRadius: '16px', overflow: 'hidden', background: 'var(--paper)', boxShadow: '0 6px 20px rgba(0,0,0,0.06)' }}>
+                  <img 
+                    src={doctorImg} 
+                    alt={DOCTOR_INFO.name} 
+                    style={{ width: '100%', height: '260px', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} 
+                  />
+                  <div style={{ padding: '20px' }}>
+                    <div className="eyebrow">Resident Senior Eye Specialist</div>
+                    <h3 style={{ fontSize: '20px', margin: '4px 0' }}>{DOCTOR_INFO.name}</h3>
+                    <div style={{ color: 'var(--accent-gold)', fontSize: '13px', fontWeight: 600, marginBottom: '8px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
+                    <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6' }}>{DOCTOR_INFO.bio}</p>
+                  </div>
+                </div>
+
+                <div style={{ border: '1px solid var(--line)', borderRadius: '16px', overflow: 'hidden', background: 'var(--paper)', boxShadow: '0 6px 20px rgba(0,0,0,0.06)' }}>
+                  <img 
+                    src={eyeExamImg} 
+                    alt="Dr. Vuyyuru Raja Sekhar performing eye examination with ARK refraction machine" 
+                    style={{ width: '100%', height: '260px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
+                  />
+                  <div style={{ padding: '20px' }}>
+                    <div className="eyebrow">Real In-Clinic Eye Diagnostic Room</div>
+                    <h3 style={{ fontSize: '20px', margin: '4px 0' }}>Computerized ARK Eye Examination</h3>
+                    <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6' }}>
+                      State-of-the-art refractive eye testing equipment &amp; complete visual health checkups under direct supervision of Dr. Vuyyuru Raja Sekhar at Kanna Vari Thota, Guntur Clinic.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="grid-4">
