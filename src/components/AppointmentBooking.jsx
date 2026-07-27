@@ -61,6 +61,31 @@ export const AppointmentBooking = ({ onBookingComplete }) => {
     return dateStr < todayStr;
   };
 
+  const isSlotPassed = (dateStr, slotStr) => {
+    if (!dateStr) return false;
+    const todayStr = new Date().toISOString().split('T')[0];
+    if (dateStr < todayStr) return true;
+    if (dateStr > todayStr) return false;
+
+    // For today: check if current time has passed slot end time
+    const now = new Date();
+    const currentMins = now.getHours() * 60 + now.getMinutes();
+
+    // Morning Session (09:00 AM - 10:30 AM) -> End time 10:30 AM (630 mins)
+    if (slotStr.includes('09:00 AM')) {
+      return currentMins >= (10 * 60 + 30);
+    }
+    // Mid-Morning Session (10:30 AM - 12:00 PM) -> End time 12:00 PM (720 mins)
+    if (slotStr.includes('10:30 AM')) {
+      return currentMins >= (12 * 60);
+    }
+    // Noon Session (12:00 PM - 01:00 PM) -> End time 01:00 PM (780 mins / 13:00)
+    if (slotStr.includes('12:00 PM') || slotStr.includes('01:00 PM')) {
+      return currentMins >= (13 * 60);
+    }
+    return false;
+  };
+
   // Handle Step 1 -> Step 2
   const handleProceedToSlots = (e) => {
     e.preventDefault();
@@ -97,6 +122,10 @@ export const AppointmentBooking = ({ onBookingComplete }) => {
     }
     if (!selectedTimeSlot) {
       setErrorMsg('Please select an available 9 AM - 1 PM time slot.');
+      return;
+    }
+    if (isSlotPassed(selectedDate, selectedTimeSlot)) {
+      setErrorMsg('This OPD consultation time slot has already passed for today. Please select an upcoming slot or a future date.');
       return;
     }
 
@@ -337,23 +366,25 @@ export const AppointmentBooking = ({ onBookingComplete }) => {
                   <div className="slots-grid">
                     {allTimeSlots.map((slot) => {
                       const { isBooked, isBlocked } = isSlotBookedOrBlocked(selectedDate, slot);
+                      const isPassed = isSlotPassed(selectedDate, slot);
                       const isSelected = selectedTimeSlot === slot;
-                      const isUnavailable = isBooked || isBlocked;
+                      const isUnavailable = isBooked || isBlocked || isPassed;
 
                       return (
                         <button
                           key={slot}
                           type="button"
                           disabled={isUnavailable}
-                          className={`slot-btn ${isSelected ? 'selected' : ''} ${isBooked ? 'booked' : ''} ${isBlocked ? 'blocked' : ''}`}
+                          className={`slot-btn ${isSelected ? 'selected' : ''} ${isBooked ? 'booked' : ''} ${isBlocked ? 'blocked' : ''} ${isPassed ? 'passed' : ''}`}
                           onClick={() => {
+                            if (isPassed) return;
                             setSelectedTimeSlot(slot);
                             setErrorMsg('');
                           }}
                         >
                           <span className="slot-time">{slot}</span>
                           <span className="slot-status">
-                            {isBooked ? "BOOKED" : isBlocked ? "UNAVAILABLE" : isSelected ? "SELECTED" : "AVAILABLE"}
+                            {isPassed ? "TIME EXPIRED" : isBooked ? "BOOKED" : isBlocked ? "UNAVAILABLE" : isSelected ? "SELECTED" : "AVAILABLE"}
                           </span>
                         </button>
                       );
@@ -695,6 +726,17 @@ export const AppointmentBooking = ({ onBookingComplete }) => {
           border-color: #fee2e2;
           cursor: not-allowed;
           opacity: 0.6;
+        }
+        .slot-btn.passed {
+          background: #f8fafc;
+          border-color: #cbd5e1;
+          color: #94a3b8;
+          cursor: not-allowed;
+          opacity: 0.65;
+        }
+        .slot-btn.passed .slot-status {
+          color: #dc2626;
+          font-weight: 700;
         }
         .slot-time {
           font-size: 0.95rem;
