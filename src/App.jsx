@@ -87,6 +87,56 @@ export default function App() {
   
   const isSunday = (y, m, d) => new Date(y, m, d).getDay() === 0;
 
+  const isSlotPassedStr = (dateStr, sessionStr) => {
+    if (!dateStr) return false;
+    const now = new Date();
+    const todayStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+
+    // Past date
+    if (dateStr < todayStr) return true;
+    // Future date
+    if (dateStr > todayStr) return false;
+
+    // Today's date: check current time vs OPD session end time
+    const currentMins = now.getHours() * 60 + now.getMinutes();
+
+    // Morning Session (09:00 AM - 10:30 AM) -> End time 10:30 AM (630 mins)
+    if (sessionStr.includes('09:00 AM')) {
+      return currentMins >= (10 * 60 + 30);
+    }
+    // Mid-Morning Session (10:30 AM - 12:00 PM) -> End time 12:00 PM (720 mins)
+    if (sessionStr.includes('10:30 AM')) {
+      return currentMins >= (12 * 60);
+    }
+    // Noon Session (12:00 PM - 01:00 PM) -> End time 01:00 PM (780 mins / 13:00)
+    if (sessionStr.includes('12:00 PM') || sessionStr.includes('01:00 PM')) {
+      return currentMins >= (13 * 60);
+    }
+    return false;
+  };
+
+  // Auto-default date on load to next available working day if today's OPD has ended
+  useEffect(() => {
+    const now = new Date();
+    const currentMins = now.getHours() * 60 + now.getMinutes();
+
+    let target = new Date();
+    // If today is Sunday or past OPD end time (1:00 PM / 13:00), default to tomorrow/next working day
+    if (now.getDay() === 0 || currentMins >= (13 * 60)) {
+      target.setDate(target.getDate() + 1);
+    }
+    if (target.getDay() === 0) {
+      target.setDate(target.getDate() + 1);
+    }
+
+    const y = target.getFullYear();
+    const m = target.getMonth();
+    const d = target.getDate();
+    setCalYear(y);
+    setCalMonth(m);
+    setSelectedDate(`${y}-${pad(m + 1)}-${pad(d)}`);
+  }, []);
+
   const ALL_SESSIONS = generateTimeSlots(); // Session Windows
 
   // Handle Admin Login Attempt
@@ -398,26 +448,36 @@ export default function App() {
 
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                               {ALL_SESSIONS.map(session => {
+                                const isPassed = selectedDate ? isSlotPassedStr(selectedDate, session) : false;
                                 const isSelected = selectedTime === session;
                                 return (
                                   <button
                                     key={session}
                                     type="button"
+                                    disabled={isPassed}
                                     className={`btn btn-outline ${isSelected ? 'btn-gold' : ''}`}
                                     style={{
                                       justifyContent: 'space-between',
                                       padding: '10px 14px',
                                       textAlign: 'left',
                                       fontWeight: 600,
-                                      fontSize: '12px'
+                                      fontSize: '12px',
+                                      background: isPassed ? '#fee2e2' : undefined,
+                                      borderColor: isPassed ? '#fca5a5' : undefined,
+                                      color: isPassed ? '#b91c1c' : undefined,
+                                      cursor: isPassed ? 'not-allowed' : 'pointer',
+                                      opacity: isPassed ? 0.75 : 1
                                     }}
                                     onClick={() => {
+                                      if (isPassed) return;
                                       setSelectedTime(session);
                                       setErrorMsg('');
                                     }}
                                   >
                                     <span>{session}</span>
-                                    <span>{isSelected ? '✓ SELECTED' : 'SELECT'}</span>
+                                    <span style={{ fontWeight: 700 }}>
+                                      {isPassed ? '✕ TIME EXPIRED' : isSelected ? '✓ SELECTED' : 'SELECT'}
+                                    </span>
                                   </button>
                                 );
                               })}

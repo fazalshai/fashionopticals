@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar, Phone, Award, ShieldCheck, Sparkles, Star, MapPin, Clock } from 'lucide-react';
 import { DOCTOR_INFO } from '../data/mockData';
+import doctorImg from '../assets/dr_vuyyuru_raja_sekhar.png';
 
 export const Hero = ({ onBookClick, onExploreOpticals }) => {
   return (
@@ -75,7 +76,7 @@ export const Hero = ({ onBookClick, onExploreOpticals }) => {
           <div className="doctor-hero-card glass-card">
             <div className="doctor-image-container">
               <img 
-                src="/dr_vuyyuru_raja_sekhar.png" 
+                src={doctorImg} 
                 alt="Dr. Vuyyuru Raja Sekhar" 
                 className="doctor-hero-img" 
               />
