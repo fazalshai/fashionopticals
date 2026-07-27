@@ -35,6 +35,19 @@ export const DoctorSection = ({ onBookClick }) => {
               </div>
             </div>
 
+            {/* In-Clinic Examination Photo Showcase */}
+            <div style={{ marginBottom: '1.5rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-light)', boxShadow: '0 4px 14px rgba(0,0,0,0.08)' }}>
+              <img 
+                src="/eye_examination.jpg" 
+                alt="Dr. Vuyyuru Raja Sekhar performing eye examination with computerized ARK refraction machine" 
+                style={{ width: '100%', height: '220px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
+              />
+              <div style={{ padding: '10px 14px', background: '#f8fafc', fontSize: '0.82rem', fontWeight: 600, color: 'var(--primary-navy)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span>📷 Computerized ARK Eye Testing & Diagnostic Room</span>
+                <span style={{ fontSize: '0.75rem', background: '#0284c7', color: '#fff', padding: '2px 8px', borderRadius: '12px', fontWeight: 700 }}>Fashion Opticals Clinic</span>
+              </div>
+            </div>
+
             <p className="bio-text">
               {DOCTOR_INFO.bio}
             </p>

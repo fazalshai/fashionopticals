@@ -6,42 +6,66 @@ const BACKEND_URL = typeof window !== 'undefined' && window.location.hostname ==
   : '/api/appointments';
 
 const STORAGE_KEY = 'fashion_opticals_appointments';
+const DELETED_KEY = 'fashion_opticals_deleted_ids';
 
-// 1. GET ALL APPOINTMENTS FROM LOCALSTORAGE
+// GET ALL PERMANENTLY DELETED APPOINTMENT IDS
+export const getDeletedIds = () => {
+  try {
+    const raw = localStorage.getItem(DELETED_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+};
+
+// ADD AN ID TO PERMANENT DELETED LIST
+export const addDeletedId = (id) => {
+  const deleted = getDeletedIds();
+  if (!deleted.includes(id)) {
+    deleted.push(id);
+    localStorage.setItem(DELETED_KEY, JSON.stringify(deleted));
+  }
+};
+
+// 1. GET ALL APPOINTMENTS FROM LOCALSTORAGE (FILTERING OUT DELETED ONES)
 export const getAppointments = () => {
   const local = localStorage.getItem(STORAGE_KEY);
+  const deletedIds = getDeletedIds();
   let appointments = [];
   try {
     appointments = local ? JSON.parse(local) : INITIAL_APPOINTMENTS;
   } catch (e) {
     appointments = INITIAL_APPOINTMENTS;
   }
-  return appointments;
+  return appointments.filter(a => a && a.id && !deletedIds.includes(a.id));
 };
 
-// HELPER TO MERGE TWO APPOINTMENT ARRAYS SAFELY BY ID (PREVENT LOSS)
+// HELPER TO MERGE TWO APPOINTMENT ARRAYS SAFELY BY ID (PREVENT LOSS & EXCLUDE DELETED)
 function mergeAppointments(serverList, localList) {
+  const deletedIds = getDeletedIds();
   const map = new Map();
 
   // Add local records first
   for (const item of localList) {
-    if (item && item.id) map.set(item.id, item);
+    if (item && item.id && !deletedIds.includes(item.id)) {
+      map.set(item.id, item);
+    }
   }
 
-  // Server records take precedence if updated
+  // Server records take precedence if updated (unless deleted)
   for (const item of serverList) {
-    if (item && item.id) {
+    if (item && item.id && !deletedIds.includes(item.id)) {
       map.set(item.id, item);
     }
   }
 
   const merged = Array.from(map.values());
-  // Sort newest first by ID or createdAt
+  // Sort newest first by ID
   merged.sort((a, b) => (b.id || '').localeCompare(a.id || ''));
   return merged;
 }
 
-// ASYNC FETCH FROM REAL BACKEND DATABASE WITH ZERO-LOSS MERGE
+// ASYNC FETCH FROM REAL BACKEND DATABASE WITH ZERO-LOSS MERGE & DELETED FILTERING
 export const fetchAppointmentsFromBackend = async (date = 'ALL') => {
   const localApps = getAppointments();
   try {
@@ -74,6 +98,10 @@ export const saveAppointment = (appointmentData) => {
     status: appointmentData.status || 'Confirmed',
     createdAt: appointmentData.createdAt || new Date().toISOString()
   };
+
+  // If this ID was previously marked deleted, un-delete it
+  const deleted = getDeletedIds().filter(d => d !== appointmentId);
+  localStorage.setItem(DELETED_KEY, JSON.stringify(deleted));
 
   // 1. Immediately save to local storage (instant response)
   const updated = [newRecord, ...current.filter(a => a.id !== appointmentId)];
@@ -134,8 +162,9 @@ export const updateAppointmentStatus = (id, newStatus) => {
   return updated;
 };
 
-// 4. DELETE SINGLE APPOINTMENT ENTRY
+// 4. PERMANENT DELETE SINGLE APPOINTMENT ENTRY
 export const deleteAppointment = (id) => {
+  addDeletedId(id);
   const current = getAppointments();
   const updated = current.filter(a => a.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
