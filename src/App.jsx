@@ -350,30 +350,36 @@ export default function App() {
                     Consult resident Senior Ophthalmologist <strong>Dr. Vuyyuru Raja Sekhar</strong> (MBBS, MS Ophthalmology, 38+ Years Experience). Complete eye health checkups, surgical evaluations &amp; fashion opticals under one roof.
                   </p>
                   
-                  {/* DOCTOR SPOTLIGHT PHOTO CARD (HERO TOP FOLD) */}
-                  <div className="doctor-card" style={{ display: 'flex', gap: '18px', alignItems: 'center', flexWrap: 'wrap', marginTop: '20px', padding: '16px 20px', border: '1px solid var(--line)', borderRadius: '16px', background: 'var(--paper)', boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }}>
-                    <img 
-                      src={doctorImg} 
-                      alt="Dr. Vuyyuru Raja Sekhar" 
-                      style={{ width: '130px', height: '130px', borderRadius: '16px', objectFit: 'cover', objectPosition: 'center top', border: '3px solid var(--accent-gold)', boxShadow: '0 8px 20px rgba(0,0,0,0.15)', flexShrink: 0 }} 
-                    />
-                    <div style={{ flex: 1, minWidth: '200px' }}>
-                      <div className="eyebrow" style={{ color: 'var(--accent-gold)', fontWeight: 700 }}>👨‍⚕️ Resident Senior Eye Specialist</div>
-                      <h2 style={{ fontSize: '22px', margin: '4px 0', fontFamily: 'Fraunces, serif' }}>{DOCTOR_INFO.name}</h2>
-                      <div className="cred" style={{ fontSize: '13px', color: 'var(--gray)', fontWeight: 600, marginBottom: '10px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
+                  {/* LARGE PROMINENT DOCTOR SPOTLIGHT CARD */}
+                  <div className="doctor-card" style={{ marginTop: '24px', padding: '0', border: '1px solid var(--line)', borderRadius: '20px', background: 'var(--paper)', boxShadow: '0 12px 32px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+                    <div style={{ position: 'relative', width: '100%', height: '360px', overflow: 'hidden', background: '#e2e8f0' }}>
+                      <img 
+                        src={doctorImg} 
+                        alt="Dr. Vuyyuru Raja Sekhar" 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }} 
+                      />
+                      <div style={{ position: 'absolute', top: '14px', right: '14px', background: 'rgba(11, 19, 43, 0.85)', backdropFilter: 'blur(8px)', color: '#fbbf24', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px', border: '1px solid rgba(251, 191, 36, 0.4)' }}>
+                        <span>★ 38+ Years Experience</span>
+                      </div>
+                    </div>
+
+                    <div style={{ padding: '20px 24px' }}>
+                      <div className="eyebrow" style={{ color: 'var(--accent-gold)', fontWeight: 700, marginBottom: '4px' }}>👨‍⚕️ Resident Senior Eye Specialist</div>
+                      <h2 style={{ fontSize: '24px', margin: '2px 0 6px 0', fontFamily: 'Fraunces, serif', color: 'var(--primary-navy)' }}>{DOCTOR_INFO.name}</h2>
+                      <div className="cred" style={{ fontSize: '13px', color: 'var(--gray)', fontWeight: 600, marginBottom: '16px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
                       
-                      <div className="stat-row">
+                      <div className="stat-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', paddingTop: '14px', borderTop: '1px solid var(--line)' }}>
                         <div className="stat">
-                          <div className="num">38+</div>
-                          <div className="label">Years exp.</div>
+                          <div className="num" style={{ fontSize: '20px', fontWeight: 800, color: 'var(--primary-navy)' }}>38+</div>
+                          <div className="label" style={{ fontSize: '11px', color: 'var(--gray)' }}>Years exp.</div>
                         </div>
                         <div className="stat">
-                          <div className="num">97%</div>
-                          <div className="label">Recommended</div>
+                          <div className="num" style={{ fontSize: '20px', fontWeight: 800, color: 'var(--accent-gold)' }}>97%</div>
+                          <div className="label" style={{ fontSize: '11px', color: 'var(--gray)' }}>Recommended</div>
                         </div>
                         <div className="stat">
-                          <div className="num">4</div>
-                          <div className="label">Specialities</div>
+                          <div className="num" style={{ fontSize: '20px', fontWeight: 800, color: '#0284c7' }}>4</div>
+                          <div className="label" style={{ fontSize: '11px', color: 'var(--gray)' }}>Specialities</div>
                         </div>
                       </div>
                     </div>
