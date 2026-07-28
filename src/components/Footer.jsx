@@ -59,7 +59,7 @@ export const Footer = ({ onBookClick, onAdminToggle }) => {
             <h4>Clinic Desk Contact</h4>
             <div className="contact-item">
               <MapPin size={16} className="text-blue" />
-              <span>Kanna Vari Thota, Opp Guntur Medical College Gate, AP</span>
+              <span>Opposite Karnataka Bank, Amaravathi Road, Guntur, AP</span>
             </div>
             <div className="contact-item">
               <Phone size={16} className="text-gold" />

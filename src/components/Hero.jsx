@@ -98,7 +98,7 @@ export const Hero = ({ onBookClick, onExploreOpticals }) => {
               <div className="doctor-card-footer">
                 <div className="location-tag">
                   <MapPin size={14} />
-                  <span>Kanna Vari Thota & Vaddeswaram</span>
+                  <span>Opposite Karnataka Bank, Amaravathi Road, Guntur</span>
                 </div>
                 <button onClick={onBookClick} className="btn-sm-book">
                   Book Visit →

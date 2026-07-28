@@ -841,7 +841,7 @@ export default function App() {
                     <div className="eyebrow" style={{ color: '#0284c7', fontWeight: 700 }}>📷 In-Clinic Diagnostic Examination</div>
                     <h3 style={{ fontSize: '20px', margin: '6px 0', color: 'var(--primary-navy)' }}>Computerized Eye Testing Room</h3>
                     <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
-                      Dr. Vuyyuru Raja Sekhar conducting automated ARK computerized refractive error testing and corneal inspection on a patient at Fashion Opticals &amp; Eye Clinic, Kanna Vari Thota, Guntur.
+                      Dr. Vuyyuru Raja Sekhar conducting automated ARK computerized refractive error testing and corneal inspection on a patient at Fashion Opticals &amp; Eye Clinic, Opposite Karnataka Bank, Amaravathi Road, Guntur.
                     </p>
                   </div>
                 </div>
@@ -910,7 +910,7 @@ export default function App() {
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '16px' }}>Fashion Opticals &amp; Eye Clinic</div>
                     <div style={{ color: 'var(--gray)', fontSize: '13px', marginTop: '2px' }}>
-                      Kanna Vari Thota, Guntur Clinic Location
+                      Opposite Karnataka Bank, Amaravathi Road, Guntur
                     </div>
                   </div>
 

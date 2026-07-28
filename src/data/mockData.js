@@ -6,7 +6,7 @@ export const DOCTOR_INFO = {
   rating: "97%",
   totalRatings: 96,
   affiliation: "Guntur Medical College & Hospital",
-  location: "Fashion Opticals & Eye Clinic, Kanna Vari Thota, Guntur",
+  location: "Fashion Opticals & Eye Clinic, Opposite Karnataka Bank, Amaravathi Road, Guntur",
   opdTimings: "Mon - Sat: 9:00 AM - 1:00 PM",
   opdDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
   closedDays: ["Sunday"],

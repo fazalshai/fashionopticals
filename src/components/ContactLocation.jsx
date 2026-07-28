@@ -48,8 +48,8 @@ export const ContactLocation = () => {
                 </div>
               </div>
               <p className="address-text">
-                Kanna Vari Thota, Opposite Guntur Medical College & Hospital Main Gate,<br />
-                Guntur & Vaddeswaram Main Road, Andhra Pradesh.
+                Opposite Karnataka Bank, Amaravathi Road,<br />
+                Guntur, Andhra Pradesh.
               </p>
               <div className="card-actions">
                 <a 
