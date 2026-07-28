@@ -829,41 +829,41 @@ export default function App() {
                 <div className="eyebrow">Resident Senior Specialist</div>
               </div>
 
-              {/* IN-CLINIC EYE TESTING SHOWCASE WITH GIRL PATIENT */}
+              {/* IN-CLINIC EYE EXAMINATION SHOWCASE WITH GIRL PATIENT */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '40px' }}>
                 <div style={{ border: '1px solid var(--line)', borderRadius: '16px', overflow: 'hidden', background: 'var(--paper)', boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }}>
                   <img 
                     src={eyeExamImg} 
-                    alt="Dr. Vuyyuru Raja Sekhar performing eye examination on girl patient with ARK refraction machine" 
+                    alt="Dr. Vuyyuru Raja Sekhar performing eye examination on patient" 
                     style={{ width: '100%', height: '320px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
                   />
                   <div style={{ padding: '20px 24px', background: '#f8fafc', borderTop: '1px solid var(--line)' }}>
-                    <div className="eyebrow" style={{ color: '#0284c7', fontWeight: 700 }}>📷 In-Clinic Diagnostic Examination</div>
-                    <h3 style={{ fontSize: '20px', margin: '6px 0', color: 'var(--primary-navy)' }}>Computerized Eye Testing Room</h3>
+                    <div className="eyebrow" style={{ color: '#0284c7', fontWeight: 700 }}>📷 Clinical Consultation &amp; Diagnostic Room</div>
+                    <h3 style={{ fontSize: '20px', margin: '6px 0', color: 'var(--primary-navy)' }}>Eye Testing &amp; Diagnostic Examination</h3>
                     <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
-                      Dr. Vuyyuru Raja Sekhar conducting automated ARK computerized refractive error testing and corneal inspection on a patient at Fashion Opticals &amp; Eye Clinic, Opposite Karnataka Bank, Amaravathi Road, Guntur.
+                      Dr. Vuyyuru Raja Sekhar conducting thorough clinical eye examination and vision testing on a patient at Fashion Opticals &amp; Eye Clinic, Opposite Karnataka Bank, Amaravathi Road, Guntur.
                     </p>
                   </div>
                 </div>
 
                 <div style={{ border: '1px solid var(--line)', borderRadius: '16px', padding: '28px', background: 'var(--paper)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <div className="eyebrow" style={{ color: 'var(--accent-gold)', fontWeight: 700 }}>Senior Specialist Care</div>
-                  <h3 style={{ fontSize: '22px', margin: '8px 0 12px 0' }}>Comprehensive Eye Examinations</h3>
+                  <div className="eyebrow" style={{ color: 'var(--accent-gold)', fontWeight: 700 }}>38+ Years Clinical Experience</div>
+                  <h3 style={{ fontSize: '22px', margin: '8px 0 12px 0' }}>Diagnosis &amp; Treatment of All Eye Diseases</h3>
                   <p style={{ color: 'var(--gray)', fontSize: '14px', lineHeight: '1.6', marginBottom: '18px' }}>
-                    With over 38 years of dedicated clinical expertise, Dr. Vuyyuru Raja Sekhar provides advanced diagnostic evaluations for patients of all ages.
+                    With over 38 years of surgical &amp; clinical excellence, Dr. Vuyyuru Raja Sekhar provides complete treatment and evaluation for all types of eye diseases for patients of all ages.
                   </p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
-                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Computerized ARK Refraction &amp; Vision Testing
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Complete Eye Disease Checkup &amp; Vision Testing
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
-                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Cataract, IOL &amp; Surgical Consultation
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Cataract, IOL &amp; Surgical Evaluations
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
-                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Glaucoma Pressure &amp; Fundus Screening
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Glaucoma Pressure &amp; Cornea Care
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
-                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Precision Eyeglass Power &amp; Lens Fitting
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Precision Eyeglass Prescription &amp; Spectacle Fitting
                     </div>
                   </div>
                 </div>
