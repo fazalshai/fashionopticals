@@ -350,25 +350,17 @@ export default function App() {
                     Consult resident Senior Ophthalmologist <strong>Dr. Vuyyuru Raja Sekhar</strong> (MBBS, MS Ophthalmology, 38+ Years Experience). Complete eye health checkups, surgical evaluations &amp; fashion opticals under one roof.
                   </p>
                   
-                  <div className="hero-cta" style={{ marginBottom: '24px' }}>
-                    <a href="tel:+919490349868" className="btn btn-gold">
-                      <Phone size={15} /> Call Desk: +91 94903 49868
-                    </a>
-                    <a href="tel:+919948501005" className="btn btn-outline">
-                      <Phone size={15} /> Alt Line: +91 99485 01005
-                    </a>
-                  </div>
-
-                  <div className="doctor-card" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                  {/* DOCTOR SPOTLIGHT PHOTO CARD (HERO TOP FOLD) */}
+                  <div className="doctor-card" style={{ display: 'flex', gap: '18px', alignItems: 'center', flexWrap: 'wrap', marginTop: '20px', padding: '16px 20px', border: '1px solid var(--line)', borderRadius: '16px', background: 'var(--paper)', boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }}>
                     <img 
                       src={doctorImg} 
                       alt="Dr. Vuyyuru Raja Sekhar" 
-                      style={{ width: '105px', height: '105px', borderRadius: '16px', objectFit: 'cover', objectPosition: 'center top', border: '3px solid var(--accent-gold)', boxShadow: '0 6px 16px rgba(0,0,0,0.15)', flexShrink: 0 }} 
+                      style={{ width: '130px', height: '130px', borderRadius: '16px', objectFit: 'cover', objectPosition: 'center top', border: '3px solid var(--accent-gold)', boxShadow: '0 8px 20px rgba(0,0,0,0.15)', flexShrink: 0 }} 
                     />
-                    <div style={{ flex: 1, minWidth: '180px' }}>
-                      <div className="eyebrow">Resident Senior Eye Specialist</div>
-                      <h2 style={{ fontSize: '20px', margin: '2px 0' }}>{DOCTOR_INFO.name}</h2>
-                      <div className="cred" style={{ fontSize: '12px', color: 'var(--gray)', marginBottom: '8px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
+                    <div style={{ flex: 1, minWidth: '200px' }}>
+                      <div className="eyebrow" style={{ color: 'var(--accent-gold)', fontWeight: 700 }}>👨‍⚕️ Resident Senior Eye Specialist</div>
+                      <h2 style={{ fontSize: '22px', margin: '4px 0', fontFamily: 'Fraunces, serif' }}>{DOCTOR_INFO.name}</h2>
+                      <div className="cred" style={{ fontSize: '13px', color: 'var(--gray)', fontWeight: 600, marginBottom: '10px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
                       
                       <div className="stat-row">
                         <div className="stat">
@@ -831,34 +823,42 @@ export default function App() {
                 <div className="eyebrow">Resident Senior Specialist</div>
               </div>
 
-              {/* REAL DOCTOR & IN-CLINIC EYE TESTING PHOTOS */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '24px', marginBottom: '40px' }}>
-                <div style={{ border: '1px solid var(--line)', borderRadius: '16px', overflow: 'hidden', background: 'var(--paper)', boxShadow: '0 6px 20px rgba(0,0,0,0.06)' }}>
+              {/* IN-CLINIC EYE TESTING SHOWCASE WITH GIRL PATIENT */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+                <div style={{ border: '1px solid var(--line)', borderRadius: '16px', overflow: 'hidden', background: 'var(--paper)', boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }}>
                   <img 
-                    src={doctorImg} 
-                    alt={DOCTOR_INFO.name} 
-                    style={{ width: '100%', height: '260px', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} 
+                    src={eyeExamImg} 
+                    alt="Dr. Vuyyuru Raja Sekhar performing eye examination on girl patient with ARK refraction machine" 
+                    style={{ width: '100%', height: '320px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
                   />
-                  <div style={{ padding: '20px' }}>
-                    <div className="eyebrow">Resident Senior Eye Specialist</div>
-                    <h3 style={{ fontSize: '20px', margin: '4px 0' }}>{DOCTOR_INFO.name}</h3>
-                    <div style={{ color: 'var(--accent-gold)', fontSize: '13px', fontWeight: 600, marginBottom: '8px' }}>{DOCTOR_INFO.qualifications} • {DOCTOR_INFO.affiliation}</div>
-                    <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6' }}>{DOCTOR_INFO.bio}</p>
+                  <div style={{ padding: '20px 24px', background: '#f8fafc', borderTop: '1px solid var(--line)' }}>
+                    <div className="eyebrow" style={{ color: '#0284c7', fontWeight: 700 }}>📷 In-Clinic Diagnostic Examination</div>
+                    <h3 style={{ fontSize: '20px', margin: '6px 0', color: 'var(--primary-navy)' }}>Computerized Eye Testing Room</h3>
+                    <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
+                      Dr. Vuyyuru Raja Sekhar conducting automated ARK computerized refractive error testing and corneal inspection on a patient at Fashion Opticals &amp; Eye Clinic, Kanna Vari Thota, Guntur.
+                    </p>
                   </div>
                 </div>
 
-                <div style={{ border: '1px solid var(--line)', borderRadius: '16px', overflow: 'hidden', background: 'var(--paper)', boxShadow: '0 6px 20px rgba(0,0,0,0.06)' }}>
-                  <img 
-                    src={eyeExamImg} 
-                    alt="Dr. Vuyyuru Raja Sekhar performing eye examination with ARK refraction machine" 
-                    style={{ width: '100%', height: '260px', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }} 
-                  />
-                  <div style={{ padding: '20px' }}>
-                    <div className="eyebrow">Real In-Clinic Eye Diagnostic Room</div>
-                    <h3 style={{ fontSize: '20px', margin: '4px 0' }}>Computerized ARK Eye Examination</h3>
-                    <p style={{ color: 'var(--gray)', fontSize: '13px', lineHeight: '1.6' }}>
-                      State-of-the-art refractive eye testing equipment &amp; complete visual health checkups under direct supervision of Dr. Vuyyuru Raja Sekhar at Kanna Vari Thota, Guntur Clinic.
-                    </p>
+                <div style={{ border: '1px solid var(--line)', borderRadius: '16px', padding: '28px', background: 'var(--paper)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div className="eyebrow" style={{ color: 'var(--accent-gold)', fontWeight: 700 }}>Senior Specialist Care</div>
+                  <h3 style={{ fontSize: '22px', margin: '8px 0 12px 0' }}>Comprehensive Eye Examinations</h3>
+                  <p style={{ color: 'var(--gray)', fontSize: '14px', lineHeight: '1.6', marginBottom: '18px' }}>
+                    With over 38 years of dedicated clinical expertise, Dr. Vuyyuru Raja Sekhar provides advanced diagnostic evaluations for patients of all ages.
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Computerized ARK Refraction &amp; Vision Testing
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Cataract, IOL &amp; Surgical Consultation
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Glaucoma Pressure &amp; Fundus Screening
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600 }}>
+                      <span style={{ color: '#16a34a', fontWeight: 700, fontSize: '16px' }}>✓</span> Precision Eyeglass Power &amp; Lens Fitting
+                    </div>
                   </div>
                 </div>
               </div>
